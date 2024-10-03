@@ -1,0 +1,662 @@
+Object Oriented Programming (OPPS)
+
+Classes                           &                   Objects
+group of these entities                      entities in the real world
+
+Classes are nothing but the blueprint of an Object.
+________________________________________________________________________________________________________
+
+public class OPPS {
+    public static void main(String[] args) {
+        Pen p1 = new Pen();
+        p1.setColor("green");
+        System.out.println(p1.color);
+        p1.setColor("blue");
+        System.out.println(p1.color);
+
+        p1.setTip(5);
+        System.out.println(p1.tip);
+    }
+}
+
+class Pen {
+    String color;
+    int tip;
+
+    void setColor(String newColor) {
+        color = newColor;
+    }
+
+    void setTip(int newTip) {
+        tip = newTip;
+    }
+}
+
+class Student {
+    String name;
+    int age;
+    float percentage;
+
+    void calcPercentage(int phy, int chem, int math) {
+        percentage = (phy+chem+math)/3;
+    }
+}
+________________________________________________________________________________________________________
+
+Access Modifiers
+
+Access Modifier       within class       within Package       outside package by subclass only       outside package
+
+Private                   Y                    N                             N                              N
+Default                   Y                    Y                             N                              N
+Protected                 Y                    Y                             Y                              N
+Public                    Y                    Y                             Y                              Y
+________________________________________________________________________________________________________
+
+public class OPPS {
+    public static void main(String[] args) {
+        BankAccount myAcc = new BankAccount();
+        myAcc.username = "Aman Ali";
+        System.out.println(myAcc.username);
+        myAcc.setPassword("abcded");
+    }
+}
+
+class BankAccount {
+    public String username;
+    private String password; //can not get password because of private
+
+    public void setPassword(String pwd) {  //Can be set by this function because of public
+        password = pwd;
+    }
+}
+________________________________________________________________________________________________________
+
+Getters & Setters (Can get and set private information)
+
+Get: to return the value
+Set: to set the value
+
+this: this keyword is used to refer to the current object
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+        Pen p1 = new Pen();
+        p1.setColor("blue");
+        System.out.println(p1.getColor());
+        p1.setTip(5);
+        System.out.println(p1.getTip());
+    }
+}
+
+
+class Pen {
+    private String color;
+    private int tip;
+
+    String getColor() {
+        return this.color;
+    }
+
+    int getTip() {
+        return this.tip;
+    }
+
+    void setColor(String color) {
+        this.color = color;
+    }
+
+    void setTip(int tip) {
+        this.tip = tip;
+    }
+}
+________________________________________________________________________________________________________
+
+Encapsulation
+Encapsulation is defined as the wrapping up of data & methods under a single unit. It also
+implements data hiding.(data hiding = Access specifier)
+
+Note: Code already covered in above.
+________________________________________________________________________________________________________
+
+Constructor
+Constructor is a special method which is invoked automatically at the time
+of object creation.
+
+- Constructors have the same name as class or structure.
+- Constructors don't have a return type. (Not even void)
+- Constructors are only called once, at object creation.
+- Memory allocation happens when constructor is called.
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+        Student s1 = new Student("Aman Ali"); // this is constructor call but if the constructor is not created java create a default constructor.
+        System.out.println(s1.name);
+    }
+}
+
+class Student {
+    String name;
+    int roll;
+
+    Student(String name) {  //Constructor
+        this.name = name;
+    }
+}
+________________________________________________________________________________________________________
+Types of Constructors
+
+- Non-parameterized
+
+- Parameterized
+
+public class OPPS {
+    public static void main(String[] args) {
+        Student s1 = new Student();
+        Student s2 = new Student("Aman Ali"); // this is constructor call but if the constructor is not created java create a default constructor.
+        System.out.println(s2.name);
+        Student s3 = new Student(123);
+        System.out.println(s3.roll);
+    }
+}
+
+class Student {
+    String name;
+    int roll;
+
+    Student() { //Non-Parameterized Constructor
+        System.out.println("This is a constructor.");
+    }
+
+    Student(String name) { //Parameterized Constructor
+        this.name = name;
+    }
+
+    Student(int roll) { 
+        this.roll = roll;
+    }
+}
+________________________________________________________________________________________________________
+- Copy Constructor
+
+public class OPPS {
+    public static void main(String[] args) {
+        Student s1 = new Student();
+        s1.name = "Aman";
+        s1.roll = 345;
+        s1.password = "abcdef";
+
+        s1.marks[0] = 97;
+        s1.marks[1] = 100;
+        s1.marks[2] = 96;
+
+        Student s2 = new Student(s1);
+        s2.password = "xyz";
+
+        for(int i = 0; i < 3; i++) {
+            System.out.println(s2.marks[i]);
+        }
+    }
+}
+
+class Student {
+    String name;
+    int roll;
+    String password;
+    int marks[];
+
+    //copy constructor
+    Student(Student s1) {
+        marks = new int[3];
+        this.name = s1.name;
+        this.roll = s1.roll;
+        this.marks = s1.marks;
+    }
+
+    Student() {
+        marks = new int[3];
+        System.out.println("Constructor is called...");
+    }
+}
+________________________________________________________________________________________________________
+Shallow(changes reflect) & Deep Copy(changes don't reflect)
+
+Shallow copy is a copy in which we copy only reference.
+Deep copy create a new array 
+
+
+public class OPPS {
+    public static void main(String[] args) {
+        Student s1 = new Student();
+        s1.name = "Aman";
+        s1.roll = 345;
+        s1.password = "abcdef";
+
+        s1.marks[0] = 97;
+        s1.marks[1] = 100;
+        s1.marks[2] = 96;
+
+        Student s2 = new Student(s1);
+        s2.password = "xyz";
+        s1.marks[2] = 100;
+        for(int i = 0; i < 3; i++) {
+            System.out.println(s2.marks[i]);
+        }
+    }
+}
+
+class Student {
+    String name;
+    int roll;
+    String password;
+    int marks[];
+
+    //shallow copy constructor
+    // Student(Student s1) {
+    //     marks = new int[3];
+    //     this.name = s1.name;
+    //     this.roll = s1.roll;
+    //     this.marks = s1.marks;
+    // }
+
+    //deep copy constructor
+    Student(Student s1) {
+        marks = new int[3];
+        this.name = s1.name;
+        this.roll = s1.roll;
+        for(int i = 0; i < marks.length; i++) {
+            marks[i] = s1.marks[i];
+        }
+    }
+
+    Student() {
+        marks = new int[3];
+        System.out.println("Constructor is called...");
+    }
+}
+________________________________________________________________________________________________________
+Inheritance
+Inheritance is when properties & methods of base class are passed
+on to a derived class.
+
+Types of Inheritance
+1) Single Level Inheritance
+Base Class
+    |
+    |
+Derived Class
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+       Fish shark = new Fish();
+       shark.eat();
+    }
+}
+
+//Base class
+class Animal {
+    String color;
+    void eat() {
+        System.out.println("eats");
+    }
+
+    void breathe() {
+        System.out.println("breathes");
+    }
+}
+
+//Derived Class
+class Fish extends Animal {
+    int fins;
+
+    void swim() {
+        System.out.println("swims in water");
+    }
+}
+________________________________________________________________________________________________________
+2) Multi Level Inheritance
+Base Class
+    |
+    |
+Derived Class
+    |
+    |
+Derived Class
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+        Cat kitty = new Cat();
+        kitty.eat();
+        kitty.legs = 4;
+        System.out.println(kitty.legs);
+    }
+}
+
+//Base class
+class Animal {
+    String color;
+    void eat() {
+        System.out.println("eats");
+    }
+
+    void breathe() {
+        System.out.println("breathes");
+    }
+}
+
+//Derived Class
+class Mammal extends Animal {
+    int legs;
+}
+
+//Derived class
+class Cat extends Mammal {
+    String breed;
+}
+________________________________________________________________________________________________________
+3) Hierarchial Inheritance
+
+        Base Class
+        |        |
+        |        |
+    Derived     Derived   
+     Class       Class
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+        Bird nightangle = new Bird();
+        nightangle.eat();
+    }
+}
+
+//Base class
+class Animal {
+    String color;
+    void eat() {
+        System.out.println("eats");
+    }
+
+    void breathe() {
+        System.out.println("breathes");
+    }
+}
+
+//Derived Class
+class Mammal extends Animal {
+    void walk() {
+        System.out.println("walks");
+    }
+}
+
+//Derived class
+class Fish extends Animal {
+    void swim() {
+        System.out.println("swim");
+    }
+}
+
+//Derived class
+class Bird extends Animal {
+    void fly() {
+        System.out.println("fly");
+    }
+}
+________________________________________________________________________________________________________
+4) Hybrid Inheritance
+This is a combination of all three types of inheritance
+________________________________________________________________________________________________________
+Polymorphism
+- Compile Time Polymorphism (Static)
+> Method Overloading
+
+- Run Time Polymorphism (Dynamic)
+> Method Overriding
+
+________________________________________________________________________________________________________
+Method Overloading
+Multiple functions with the same name but different parameters
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+       Calculator calc = new Calculator();
+       System.out.println(calc.sum(1, 2));
+       System.out.println(calc.sum((float)1.5, (float)2.5));
+       System.out.println(calc.sum(1, 2, 3));
+    }
+}
+
+class Calculator {
+    int sum(int a, int b) {
+        return a + b;
+    }
+
+    float sum(float a, float b) {
+        return a + b;
+    }
+
+    int sum(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+________________________________________________________________________________________________________
+Method Overriding
+Parent and child classes both contain the same function with a 
+different definition.
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+       Deer d = new Deer();
+       d.eat();
+    }
+}
+
+class Animal {
+    void eat() {
+        System.out.println("eat anything");
+    }
+}
+
+class Deer extends Animal {
+    void eat() {
+        System.out.println("eats grass");
+    }
+}
+________________________________________________________________________________________________________
+Abstraction
+Hiding all the unnecessary details and showing only the 
+important parts to the user.
+            |                       |
+            |                       |
+            |                       |
+        Abstract Classes          Interfaces
+
+ Abstract Classes  
+ - Cannot create an instance(object) of abstract class
+ - Can have abstract/non-abstract methods
+ - Can have constructors
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+        Chicken c = new Chicken();
+        c.eat();
+        c.walk();
+    //    Mustang myHorse = new Mustang();
+    }
+}
+
+abstract class Animal {
+    String color;
+
+    // Animal() {
+    //     color = "brown";
+    // }
+
+    Animal() {
+        System.out.println("Animal constructor called");
+    }
+
+    void eat() {
+        System.out.println("animal eats");
+    }
+
+    abstract void walk();  //give an idea to implement this in its every child class
+}
+
+class Horse extends Animal {
+    void changeColor() {
+        color = "dark brown";
+    }
+
+    Horse() {
+        System.out.println("Horse constructor called");
+    }
+    void walk() {
+        System.out.println("walks on 4 legs");
+    }
+}
+
+class Mustang extends Horse {
+    Mustang() {
+        System.out.println("Mustang constructor called");
+    }
+}
+
+class Chicken extends Animal {
+    void changeColor() {
+        color = "yellow";
+    }
+    void walk() {
+        System.out.println("walks on 2 legs");
+    }
+}
+________________________________________________________________________________________________________
+Interfaces (Uses multiple inheritance)
+Interface is a blueprint of a class
+(Note: If we want to inherit class we write extends but if we want to
+inherit interface we write implement)
+
+- All methods are public, abstract & without implementation
+- Used to achieve total Abstraction
+- Variables in the interface are final, public and static
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+    //    Queen q = new Queen();
+    //    q.moves();
+
+        Bear b = new Bear();
+        b.eatsGrass();
+        b.eatsMeat();
+    }
+}
+
+interface ChessPlayer {
+    void moves();
+}
+
+class Queen implements ChessPlayer {
+    public void moves() {
+        System.out.println("up, down, left, right, diagonal (in all diection)");
+    }
+}
+
+class Rook implements ChessPlayer {
+    public void moves() {
+        System.out.println("up, down, left, right");
+    }
+}
+
+class King implements ChessPlayer {
+    public void moves() {
+        System.out.println("up, down, left, right, diagonal - (by 1 step)");
+    }
+}
+
+//Usage multiple inheritance
+interface Herbivore {
+   void eatsGrass();
+}
+
+interface Carnivore {
+    void eatsMeat();
+}
+
+class Bear implements Herbivore, Carnivore {
+    public void eatsGrass() {
+        System.out.println("Can eat grass");
+    }
+
+    public void eatsMeat() {
+        System.out.println("Can eat meat");
+    }
+}
+________________________________________________________________________________________________________
+Static keyword
+static keyword in Java is used to share the same variable or method
+of a given class.
+
+- Properties
+- functions
+- Blocks
+- Nested Classes
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+        Student s1 = new Student();
+        s1.schoolName = "SVVM";
+
+        Student s2 = new Student();
+        System.out.println(s2.schoolName);
+
+        Student s3 = new Student();
+        s3.schoolName = "ABC";
+    }
+}
+
+class Student {
+    static int returnPercentage(int math, int phy, int chem) {
+        return (math+phy+chem)/3;
+    }
+    
+    String name;
+    String roll;
+
+    static String schoolName;
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    String getName() {
+        return this.name;
+    }
+}
+________________________________________________________________________________________________________
+Super keyword
+super keyword is used to refer immediate parent class object.
+
+- to access parent's properties
+- to access parent's functions 
+- to access parent's constructor
+________________________________________________________________________________________________________
+public class OPPS {
+    public static void main(String[] args) {
+       Horse h = new Horse();
+        System.out.println(h.color);
+    }
+}
+
+class Animal {
+    String color;
+    Animal() {
+        System.out.println("Animal constructor is called...");
+    }
+}
+
+class Horse extends Animal {
+    Horse() {
+        super.color = "brown";
+        System.out.println("Horse constructor is called...");
+    }
+}
+________________________________________________________________________________________________________
